@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/fabric@latest/dist/index.min.js"></script>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>Canvas Testing Lab</title>
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="app-header">
+            <p class="eyebrow">Fabric Playground</p>
+            <h1>Canvas Testing Lab</h1>
+            <p class="subtitle">Create objects, draw freely, edit selected properties, and manage layers without the clutter.</p>
+        </header>
+
+        <main class="workspace-grid">
+            <section class="canvas-column">
+                <div class="panel canvas-panel">
+                    <div class="panel-head">
+                        <h2>Design Surface</h2>
+                    </div>
+                    <div class="canvas-frame">
+                        <div class="product-stage">
+                            <img
+                                id="product-background"
+                                src="https://cdn.webshopapp.com/shops/56537/files/430750080/1000x1000x2/basic-unisex-t-shirt-zwart-atomic-150.jpg"
+                                alt="T-shirt mockup"
+                            >
+                            <div class="print-area">
+                                <canvas id="mainCanvasId" width="330" height="420"></canvas>
+                            </div>
+                            <button id="toggle-canvas-overlay" type="button" class="stage-toggle-btn" aria-label="Toggle shirt preview" title="Preview shirt without canvas frame">
+                                <i id="toggle-canvas-overlay-icon" class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <small class="text-muted d-block mt-2">Canvas is the printable area. The shirt image is a separate layer that can be swapped independently.</small>
+                </div>
+            </section>
+
+            <aside class="sidebar-column">
+                <div class="panel inspector-panel">
+                    <div class="panel-head">
+                        <h2>Selected Object</h2>
+                        <p><strong>Type:</strong> <span id="selected-type">None</span></p>
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <label for="prop-left" class="form-label mb-1">Left</label>
+                            <input id="prop-left" type="number" step="1" class="form-control form-control-sm object-prop-input">
+                        </div>
+                        <div class="col-6">
+                            <label for="prop-top" class="form-label mb-1">Top</label>
+                            <input id="prop-top" type="number" step="1" class="form-control form-control-sm object-prop-input">
+                        </div>
+                        <div class="col-6">
+                            <label for="prop-angle" class="form-label mb-1">Angle</label>
+                            <input id="prop-angle" type="number" step="1" class="form-control form-control-sm object-prop-input">
+                        </div>
+                        <div class="col-12 mt-2">
+                            <hr class="my-2">
+                            <small class="text-muted">Size</small>
+                        </div>
+                        <div class="col-6">
+                            <label for="prop-width" class="form-label mb-1">Width</label>
+                            <input id="prop-width" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
+                        </div>
+                        <div class="col-6">
+                            <label for="prop-height" class="form-label mb-1">Height</label>
+                            <input id="prop-height" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
+                        </div>
+                        <div class="col-6">
+                            <label for="prop-radius" class="form-label mb-1">Radius</label>
+                            <input id="prop-radius" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
+                        </div>
+                        <div class="col-12 mt-2">
+                            <hr class="my-2">
+                            <small class="text-muted">Appearance</small>
+                        </div>
+                        <div class="col-6">
+                            <label for="prop-fill" class="form-label mb-1">Fill</label>
+                            <input id="prop-fill" type="color" class="form-control form-control-sm form-control-color w-100 object-prop-input">
+                        </div>
+                        <div class="col-6">
+                            <label for="prop-stroke" class="form-label mb-1">Stroke</label>
+                            <input id="prop-stroke" type="color" class="form-control form-control-sm form-control-color w-100 object-prop-input">
+                        </div>
+                        <div class="col-6">
+                            <label for="prop-stroke-width" class="form-label mb-1">Stroke Width</label>
+                            <input id="prop-stroke-width" type="number" min="0" step="1" class="form-control form-control-sm object-prop-input">
+                        </div>
+                        <div id="text-controls-group" class="contents">
+                            <div class="col-12 mt-2">
+                                <hr class="my-2">
+                                <small class="text-muted">Text Controls</small>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label for="prop-text" class="form-label mb-1">Text</label>
+                                <input id="prop-text" type="text" class="form-control form-control-sm object-prop-input">
+                            </div>
+                            <div class="col-5 me-2">
+                                <label for="prop-font-size" class="form-label mb-1">Font Size</label>
+                                <input id="prop-font-size" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
+                            </div>
+                            <div class="col-5 ms-2">
+                                <label for="prop-font-family" class="form-label mb-1">Font Family</label>
+                                <input id="prop-font-family" type="text" class="form-control form-control-sm object-prop-input" placeholder="Space Grotesk, Georgia, ...">
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted d-block mt-2">Select one object to edit properties.</small>
+                    <button id="delete-selected" type="button" class="btn btn-danger btn-sm mt-2 w-100" disabled>Delete Selected Object</button>
+                </div>
+
+                <div class="panel tools-panel">
+                    <div class="panel-head">
+                        <h2>Creation Tools</h2>
+                    </div>
+
+                    <div class="tool-grid">
+                        <div class="tool-group">
+                            <h3>Shapes</h3>
+                            <div class="button-row">
+                                <button onclick="CreateSquare()" class="btn btn-primary">Add Square</button>
+                                <button onclick="CreateCircle()" class="btn btn-primary">Add Circle</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-group">
+                            <h3>Text</h3>
+                            <div class="inline-controls">
+                                <input type="text" placeholder="Text content..." id="textinput" class="form-control">
+                                <button onclick="CreateText()" class="btn btn-primary">Add Text</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-group">
+                            <h3>Image</h3>
+                            <div class="inline-controls">
+                                <input type="file" accept="image/*" id="image" class="form-control">
+                                <button onclick="CreateImage()" class="btn btn-primary">Add Image</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-group">
+                            <h3>Drawing Mode</h3>
+                            <div class="button-row mb-3">
+                                <button onclick="DrawingMode()" class="btn btn-primary" id="draw-btn">Start Drawing</button>
+                            </div>
+                            <div class="inline-controls">
+                                <label for="color" class="field-label">Brush Color</label>
+                                <input type="color" id="color" class="form-control form-control-color">
+                            </div>
+                            <div class="inline-controls range-row">
+                                <label for="width" id="size" class="field-label">Brush Size: 5</label>
+                                <input type="range" min="1" max="10" value="5" id="width" class="form-range">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel layers-panel">
+                    <div class="panel-head">
+                        <h2>Layers</h2>
+                    </div>
+                    <div id="list" class="object-list d-flex flex-column-reverse">
+                        <div>List item</div>
+                    </div>
+                </div>
+
+                <div class="panel tools-panel">
+                    <div class="panel-head">
+                        <h2>Export and Import</h2>
+                    </div>
+                    <div class="tool-grid">
+                        <div class="tool-group">
+                            <h3>JSON</h3>
+                            <div class="button-row mb-3">
+                                <button onclick="ExportJSON()" class="btn btn-outline-primary">Export JSON</button>
+                                <button onclick="ImportJSON()" class="btn btn-outline-primary">Import JSON</button>
+                            </div>
+                            <textarea id="json-import" placeholder="Paste JSON here..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+
+    <script src="app.js"></script>
+    <script>
+
+        const colorArray = ['white', 'gray', 'black', 'brown', 'purple', 'magenta', 'pink', 'red', 'orange', 'yellow', 'lime', 'green', 'darkgreen', 'lightblue', 'cyan', 'blue', 'darkblue']
+
+        function GetRandomColor() {
+            return colorArray[Math.floor(Math.random() * colorArray.length)];
+        }
+
+        function GetCanvasCenter() {
+            return {
+                left: Math.round(canvasObj.getWidth() / 2),
+                top: Math.round(canvasObj.getHeight() / 2)
+            };
+        }
+
+        function CreateSquare() {
+            console.log("Square");
+            const center = GetCanvasCenter();
+            let rectObj = new fabric.Rect({
+                left: center.left, top: center.top, fill: GetRandomColor(), stroke: GetRandomColor(), width: 100, height: 100
+            });
+            canvasObj.add(rectObj);
+            DisplayList()
+        }
+
+        function CreateCircle() {
+            const center = GetCanvasCenter();
+            let circleObj = new fabric.Circle({
+                radius: 75, fill: GetRandomColor(), stroke: GetRandomColor(), left: center.left, top: center.top
+            });
+            canvasObj.add(circleObj);
+            DisplayList()
+
+        }
+
+        function CreateText() {
+            let input = document.getElementById("textinput").value;
+            const center = GetCanvasCenter();
+            let newText = new fabric.Textbox(input, {
+                top: center.top, left: center.left, editable: true
+            });
+
+            canvasObj.add(newText);
+            DisplayList()
+
+        }
+
+        function CreateImage() {
+            const fileInput = document.getElementById('image');
+            const selectedFile = fileInput.files && fileInput.files[0];
+
+            if (!selectedFile) {
+                console.log("no file added");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const imgElement = new Image();
+                imgElement.onload = function () {
+                    const center = GetCanvasCenter();
+                    const img = new fabric.Image(imgElement, {
+                        left: center.left,
+                        top: center.top
+                    });
+
+                    img.scaleToHeight(300);
+                    img.scaleToWidth(300);
+                    canvasObj.add(img);
+                    canvasObj.requestRenderAll();
+                    DisplayList();
+                };
+
+                imgElement.src = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+
+        }
+
+        function ExportJSON() {
+            let jsonExport = JSON.stringify(canvasObj);
+            navigator.clipboard.writeText(jsonExport);
+        }
+
+        function ImportJSON() {
+            const json = document.getElementById("json-import");
+            try {
+                canvasObj.loadFromJSON(json.value, function () {
+                    canvasObj.requestRenderAll();
+                    DisplayList();
+                });
+            }
+            catch (e) {
+                alert(e);
+            }
+            json.value = "";
+        }
+
+        canvasObj.freeDrawingBrush = new fabric.PencilBrush(canvasObj);
+
+        const colorPicker = document.getElementById("color");
+        colorPicker.addEventListener("input", SetBrushColor);
+        colorPicker.addEventListener("change", watchColorPicker);
+
+        function watchColorPicker(event) {
+            SetBrushColor();
+        }
+
+        function SetBrushColor() {
+            canvasObj.freeDrawingBrush.color = colorPicker.value;
+
+        }
+
+        const drawButton = document.getElementById("draw-btn");
+
+        function DrawingMode() {
+            canvasObj.isDrawingMode = !canvasObj.isDrawingMode;
+            canvasObj.freeDrawingBrush.width = slider.value;
+
+            if (canvasObj.isDrawingMode) {
+                drawButton.classList.add("btn-danger")
+            }
+            else {
+                drawButton.classList.remove("btn-danger")
+
+            }
+        }
+
+        let slider = document.getElementById("width");
+        var output = document.getElementById("size");
+        output.innerHTML = 'Brush Size: ' + slider.value; // Display the default slider value
+
+        // Update the current slider value (each time you drag the slider handle)
+        slider.oninput = function () {
+            output.innerHTML = 'Brush Size: ' + slider.value;
+            canvasObj.freeDrawingBrush.width = slider.value;
+        }
+
+
+    </script>
+</body>
+
+</html>
