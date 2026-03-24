@@ -536,7 +536,14 @@ function ImportJSON() {
             });
             
             canvasObj.requestRenderAll();
+            
+            // Update layer list immediately and ensure it displays
             DisplayList();
+            
+            // Force a second update after a brief delay to ensure rendering is complete
+            setTimeout(() => {
+                DisplayList();
+            }, 50);
         });
     }
     catch (e) {
