@@ -59,103 +59,118 @@
                         <p><strong>Type:</strong> <span id="selected-type">None</span></p>
                     </div>
 
-                    <div class="row g-2">
-                        <div class="col-6">
-                            <label for="prop-left" class="form-label mb-1">Left</label>
-                            <input id="prop-left" type="number" step="1" class="form-control form-control-sm object-prop-input">
-                        </div>
-                        <div class="col-6">
-                            <label for="prop-top" class="form-label mb-1">Top</label>
-                            <input id="prop-top" type="number" step="1" class="form-control form-control-sm object-prop-input">
-                        </div>
-                        <div class="col-6">
-                            <label for="prop-angle" class="form-label mb-1">Angle</label>
-                            <input id="prop-angle" type="number" step="1" class="form-control form-control-sm object-prop-input">
-                        </div>
-                        <div class="col-12 mt-2">
-                            <hr class="my-2">
-                            <small class="text-muted">Size</small>
-                        </div>
-                        <div class="col-6">
-                            <label for="prop-width" class="form-label mb-1">Width</label>
-                            <input id="prop-width" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
-                        </div>
-                        <div class="col-6">
-                            <label for="prop-height" class="form-label mb-1">Height</label>
-                            <input id="prop-height" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
-                        </div>
-                        <div class="col-6">
-                            <label for="prop-radius" class="form-label mb-1">Radius</label>
-                            <input id="prop-radius" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
-                        </div>
-                        <div class="col-12 mt-2">
-                            <hr class="my-2">
-                            <small class="text-muted">Appearance</small>
-                        </div>
-                        <div class="col-6">
-                            <label for="prop-fill" class="form-label mb-1">Fill</label>
-                            <input id="prop-fill" type="color" class="form-control form-control-sm form-control-color w-100 object-prop-input">
-                        </div>
-                        <div class="col-6">
-                            <label for="prop-stroke" class="form-label mb-1">Stroke</label>
-                            <input id="prop-stroke" type="color" class="form-control form-control-sm form-control-color w-100 object-prop-input">
-                        </div>
-                        <div class="col-6">
-                            <label for="prop-stroke-width" class="form-label mb-1">Stroke Width</label>
-                            <input id="prop-stroke-width" type="number" min="0" step="1" class="form-control form-control-sm object-prop-input">
-                        </div>
-                        <div id="text-controls-group" class="contents">
-                            <div class="col-12 mt-2">
-                                <hr class="my-2">
-                                <small class="text-muted">Text Controls</small>
+                    <!-- Position & Rotation Section -->
+                    <div class="inspector-section">
+                        <div class="section-title">Position & Rotation</div>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label for="prop-left" class="form-label mb-1">Left</label>
+                                <input id="prop-left" type="number" step="1" class="form-control form-control-sm object-prop-input">
                             </div>
-                            <div class="col-12 mb-2">
-                                <label for="prop-text" class="form-label mb-1">Text</label>
-                                <input id="prop-text" type="text" class="form-control form-control-sm object-prop-input">
+                            <div class="col-6">
+                                <label for="prop-top" class="form-label mb-1">Top</label>
+                                <input id="prop-top" type="number" step="1" class="form-control form-control-sm object-prop-input">
                             </div>
-                            <div class="col-12 mb-2">
-                                <label class="form-label mb-1">Alignment</label>
-                                <div class="btn-group w-100" role="group">
-                                    <button type="button" id="text-align-left" class="btn btn-sm btn-outline-secondary" title="Left align">
-                                        <i class="bi bi-text-left"></i>
-                                    </button>
-                                    <button type="button" id="text-align-center" class="btn btn-sm btn-outline-secondary" title="Center align">
-                                        <i class="bi bi-text-center"></i>
-                                    </button>
-                                    <button type="button" id="text-align-right" class="btn btn-sm btn-outline-secondary" title="Right align">
-                                        <i class="bi bi-text-right"></i>
-                                    </button>
-                                    <button type="button" id="text-align-justify" class="btn btn-sm btn-outline-secondary" title="Justify">
-                                        <i class="bi bi-justify"></i>
-                                    </button>
+                            <div class="col-12">
+                                <label for="prop-angle" class="form-label mb-1">Angle</label>
+                                <input id="prop-angle" type="number" step="1" class="form-control form-control-sm object-prop-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Size Section -->
+                    <div class="inspector-section">
+                        <div class="section-title">Size</div>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label for="prop-width" class="form-label mb-1">Width</label>
+                                <input id="prop-width" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
+                            </div>
+                            <div class="col-6">
+                                <label for="prop-height" class="form-label mb-1">Height</label>
+                                <input id="prop-height" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
+                            </div>
+                            <div class="col-12">
+                                <label for="prop-radius" class="form-label mb-1">Radius (circles only)</label>
+                                <input id="prop-radius" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Colors Section -->
+                    <div class="inspector-section">
+                        <div class="section-title">Colors</div>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label for="prop-fill" class="form-label mb-1">Fill</label>
+                                <input id="prop-fill" type="color" class="form-control form-control-sm form-control-color w-100 object-prop-input">
+                            </div>
+                            <div class="col-6">
+                                <label for="prop-stroke" class="form-label mb-1">Stroke</label>
+                                <input id="prop-stroke" type="color" class="form-control form-control-sm form-control-color w-100 object-prop-input">
+                            </div>
+                            <div class="col-12">
+                                <label for="prop-stroke-width" class="form-label mb-1">Stroke Width</label>
+                                <input id="prop-stroke-width" type="number" min="0" step="1" class="form-control form-control-sm object-prop-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Text Controls Section -->
+                    <div id="text-controls-group" class="contents">
+                        <div class="inspector-section">
+                            <div class="section-title">Text Content</div>
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <label for="prop-text" class="form-label mb-1">Text</label>
+                                    <input id="prop-text" type="text" class="form-control form-control-sm object-prop-input">
                                 </div>
                             </div>
-                            <div class="col-12 mb-2">
-                                <label class="form-label mb-1">Styling</label>
-                                <div class="btn-group w-100" role="group">
-                                    <button type="button" id="text-bold" class="btn btn-sm btn-outline-secondary" title="Bold">
-                                        <i class="bi bi-type-bold"></i>
-                                    </button>
-                                    <button type="button" id="text-italic" class="btn btn-sm btn-outline-secondary" title="Italic">
-                                        <i class="bi bi-type-italic"></i>
-                                    </button>
-                                    <button type="button" id="text-underline" class="btn btn-sm btn-outline-secondary" title="Underline">
-                                        <i class="bi bi-type-underline"></i>
-                                    </button>
-                                    <button type="button" id="text-strikethrough" class="btn btn-sm btn-outline-secondary" title="Strikethrough">
-                                        <i class="bi bi-type-strikethrough"></i>
-                                    </button>
-                                </div>
+                        </div>
+
+                        <div class="inspector-section">
+                            <div class="section-title">Text Alignment</div>
+                            <div class="btn-group w-100 d-flex" role="group">
+                                <button type="button" id="text-align-left" class="btn btn-sm btn-outline-secondary flex-grow-1" title="Left align">
+                                    <i class="bi bi-text-left"></i>
+                                </button>
+                                <button type="button" id="text-align-center" class="btn btn-sm btn-outline-secondary flex-grow-1" title="Center align">
+                                    <i class="bi bi-text-center"></i>
+                                </button>
+                                <button type="button" id="text-align-right" class="btn btn-sm btn-outline-secondary flex-grow-1" title="Right align">
+                                    <i class="bi bi-text-right"></i>
+                                </button>
+                                <button type="button" id="text-align-justify" class="btn btn-sm btn-outline-secondary flex-grow-1" title="Justify">
+                                    <i class="bi bi-justify"></i>
+                                </button>
                             </div>
-                            <div class="col-6 me-2">
-                                <label for="prop-font-size" class="form-label mb-1">Font Size</label>
-                                <input id="prop-font-size" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
+                        </div>
+
+                        <div class="inspector-section">
+                            <div class="section-title">Text Styling</div>
+                            <div class="btn-group w-100 d-flex" role="group">
+                                <button type="button" id="text-bold" class="btn btn-sm btn-outline-secondary flex-grow-1" title="Bold">
+                                    <i class="bi bi-type-bold"></i>
+                                </button>
+                                <button type="button" id="text-italic" class="btn btn-sm btn-outline-secondary flex-grow-1" title="Italic">
+                                    <i class="bi bi-type-italic"></i>
+                                </button>
+                                <button type="button" id="text-underline" class="btn btn-sm btn-outline-secondary flex-grow-1" title="Underline">
+                                    <i class="bi bi-type-underline"></i>
+                                </button>
+                                <button type="button" id="text-strikethrough" class="btn btn-sm btn-outline-secondary flex-grow-1" title="Strikethrough">
+                                    <i class="bi bi-type-strikethrough"></i>
+                                </button>
                             </div>
-                            <div class="col-6 ms-2">
-                                <label for="prop-font-family" class="form-label mb-1">Font Family</label>
-                                <select id="prop-font-family" class="form-select form-select-sm object-prop-input">
-                                    <option value="">-- Select Font --</option>
-                                    <optgroup label="Web Safe">
+                        </div>
+
+                        <div class="inspector-section">
+                            <div class="section-title">Font</div>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <label for="prop-font-family" class="form-label mb-1">Family</label>
+                                    <select id="prop-font-family" class="form-select form-select-sm object-prop-input">
+                                        <option value="">-- Select Font --</option>
                                         <option value="Arial">Arial</option>
                                         <option value="Georgia">Georgia</option>
                                         <option value="Times New Roman">Times New Roman</option>
@@ -164,32 +179,25 @@
                                         <option value="Comic Sans MS">Comic Sans MS</option>
                                         <option value="Trebuchet MS">Trebuchet MS</option>
                                         <option value="Impact">Impact</option>
-                                    </optgroup>
-                                    <optgroup label="Google Fonts">
-                                        <option value="Space Grotesk">Space Grotesk</option>
-                                        <option value="Playfair Display">Playfair Display</option>
-                                        <option value="Montserrat">Montserrat</option>
-                                        <option value="Open Sans">Open Sans</option>
-                                        <option value="Roboto">Roboto</option>
-                                        <option value="Poppins">Poppins</option>
-                                        <option value="Inter">Inter</option>
-                                        <option value="Lato">Lato</option>
-                                        <option value="Raleway">Raleway</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                            <div class="col-6 me-2">
-                                <label for="prop-line-height" class="form-label mb-1">Line Height</label>
-                                <input id="prop-line-height" type="number" min="0.5" step="0.1" class="form-control form-control-sm object-prop-input">
-                            </div>
-                            <div class="col-6 ms-2">
-                                <label for="prop-letter-spacing" class="form-label mb-1">Letter Spacing</label>
-                                <input id="prop-letter-spacing" type="number" step="1" class="form-control form-control-sm object-prop-input">
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="prop-font-size" class="form-label mb-1">Size</label>
+                                    <input id="prop-font-size" type="number" min="1" step="1" class="form-control form-control-sm object-prop-input">
+                                </div>
+                                <div class="col-6">
+                                    <label for="prop-line-height" class="form-label mb-1">Line Height</label>
+                                    <input id="prop-line-height" type="number" min="0.5" step="0.1" class="form-control form-control-sm object-prop-input">
+                                </div>
+                                <div class="col-6">
+                                    <label for="prop-letter-spacing" class="form-label mb-1">Letter Spacing</label>
+                                    <input id="prop-letter-spacing" type="number" step="1" class="form-control form-control-sm object-prop-input">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <small class="text-muted d-block mt-2">Select one object to edit properties.</small>
-                    <button id="delete-selected" type="button" class="btn btn-danger btn-sm mt-2 w-100" disabled>Delete Selected Object</button>
+
+                    <button id="delete-selected" type="button" class="btn btn-danger btn-sm mt-3 w-100" disabled>Delete Selected Object</button>
                 </div>
 
                 <div class="panel tools-panel">
@@ -199,7 +207,7 @@
 
                     <div class="tool-grid">
                         <div class="tool-group">
-                            <h3>Shapes</h3>
+                            <h3>Shapes <i class="bi bi-circle-square"></i></h3>
                             <div class="button-row">
                                 <button onclick="CreateSquare()" class="btn btn-primary">Add Square</button>
                                 <button onclick="CreateCircle()" class="btn btn-primary">Add Circle</button>
@@ -207,7 +215,7 @@
                         </div>
 
                         <div class="tool-group">
-                            <h3>Text</h3>
+                            <h3>Text <i class="bi bi-type"></i></h3>
                             <div class="inline-controls">
                                 <input type="text" placeholder="Text content..." id="textinput" class="form-control">
                                 <button onclick="CreateText()" class="btn btn-primary">Add Text</button>
@@ -215,7 +223,7 @@
                         </div>
 
                         <div class="tool-group">
-                            <h3>Image</h3>
+                            <h3>Image <i class="bi bi-file-earmark-image"></i></h3>
                             <div class="inline-controls">
                                 <input type="file" accept="image/*" id="image" class="form-control">
                                 <button onclick="CreateImage()" class="btn btn-primary">Add Image</button>
@@ -223,7 +231,7 @@
                         </div>
 
                         <div class="tool-group">
-                            <h3>Drawing Mode</h3>
+                            <h3>Drawing Mode <i class="bi bi-pencil"></i></h3>
                             <div class="button-row mb-3">
                                 <button onclick="DrawingMode()" class="btn btn-primary" id="draw-btn">Start Drawing</button>
                             </div>
@@ -236,12 +244,24 @@
                                 <input type="range" min="1" max="10" value="5" id="width" class="form-range">
                             </div>
                         </div>
-                    </div>
-                </div>
+
+                        <div class="tool-group">
+                            <h3>Preset Icons <i class="bi bi-star"></i></h3>
+                            <div class="icon-grid">
+                                <button onclick="AddIcon('★')" class="btn btn-outline-secondary icon-btn" title="Star">★</button>
+                                <button onclick="AddIcon('♥')" class="btn btn-outline-secondary icon-btn" title="Heart">♥</button>
+                                <button onclick="AddIcon('→')" class="btn btn-outline-secondary icon-btn" title="Arrow">→</button>
+                                <button onclick="AddIcon('✧')" class="btn btn-outline-secondary icon-btn" title="Sparkle">✧</button>
+                                <button onclick="AddIcon('✓')" class="btn btn-outline-secondary icon-btn" title="Checkmark">✓</button>
+                                <button onclick="AddIcon('✕')" class="btn btn-outline-secondary icon-btn" title="X">✕</button>
+                                <button onclick="AddIcon('▲')" class="btn btn-outline-secondary icon-btn" title="Triangle">▲</button>
+                                <button onclick="AddIcon('⬢')" class="btn btn-outline-secondary icon-btn" title="Hexagon">⬢</button>
+                            </div>
+                        </div>
 
                 <div class="panel layers-panel">
                     <div class="panel-head">
-                        <h2>Layers</h2>
+                        <h2>Layers <i class="bi bi-layers-half"></i></h2>
                     </div>
                     <div id="list" class="object-list d-flex flex-column-reverse">
                         <div>List item</div>
@@ -250,7 +270,7 @@
 
                 <div class="panel tools-panel">
                     <div class="panel-head">
-                        <h2>Export and Import</h2>
+                        <h2>Export and Import <i class="bi bi-upload"></i></h2>
                     </div>
                     <div class="tool-grid">
                         <div class="tool-group">

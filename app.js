@@ -599,6 +599,22 @@ function CreateText() {
     DisplayList();
 }
 
+// Create and add preset icon to canvas
+function AddIcon(icon) {
+    const center = GetCanvasCenter();
+    let iconText = new fabric.Textbox(icon, {
+        top: center.top, 
+        left: center.left, 
+        fontSize: 48,
+        editable: true
+    });
+
+    canvasObj.add(iconText);
+    canvasObj.setActiveObject(iconText);
+    canvasObj.requestRenderAll();
+    DisplayList();
+}
+
 // Create and add image from file input to canvas
 function CreateImage() {
     const fileInput = document.getElementById('image');

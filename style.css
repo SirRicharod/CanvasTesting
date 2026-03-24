@@ -228,8 +228,26 @@ body {
 }
 
 /* ============================================================================
-   TOOLS & CONTROLS
+   INSPECTOR PANEL STYLING
    ============================================================================ */
+
+.inspector-section {
+    background: var(--surface-muted);
+    border: 1px solid #e3e7ea;
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #2f4a5a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+    font-family: 'Space Grotesk', sans-serif;
+}
 
 .tool-grid {
     display: grid;
@@ -277,6 +295,19 @@ body {
 
 .range-row {
     margin-top: 0.6rem;
+}
+
+/* Icon preset grid */
+.icon-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+
+.icon-btn {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    min-height: auto;
 }
 
 /* JSON import/export textarea */
