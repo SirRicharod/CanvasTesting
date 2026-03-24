@@ -389,6 +389,12 @@ textarea#json-import {
     border-color: #1f7a9e;
 }
 
+/* Drawing mode button active state */
+#draw-btn.btn-danger {
+    background: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
 /* ============================================================================
    RESPONSIVE DESIGN
    ============================================================================ */
