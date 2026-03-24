@@ -351,6 +351,13 @@ textarea#json-import {
     border-color: #2f7593;
 }
 
+/* Active state for toggle buttons */
+.btn.active {
+    background: linear-gradient(140deg, #1f7a9e, #226987);
+    color: white;
+    border-color: #1f7a9e;
+}
+
 /* ============================================================================
    RESPONSIVE DESIGN
    ============================================================================ */

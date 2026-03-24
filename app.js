@@ -101,7 +101,21 @@ const inspectorFields = {
     stroke: document.getElementById("prop-stroke"),
     text: document.getElementById("prop-text"),
     fontSize: document.getElementById("prop-font-size"),
-    fontFamily: document.getElementById("prop-font-family")
+    fontFamily: document.getElementById("prop-font-family"),
+    lineHeight: document.getElementById("prop-line-height"),
+    letterSpacing: document.getElementById("prop-letter-spacing")
+};
+
+// Text control buttons
+const textControlButtons = {
+    alignLeft: document.getElementById("text-align-left"),
+    alignCenter: document.getElementById("text-align-center"),
+    alignRight: document.getElementById("text-align-right"),
+    alignJustify: document.getElementById("text-align-justify"),
+    bold: document.getElementById("text-bold"),
+    italic: document.getElementById("text-italic"),
+    underline: document.getElementById("text-underline"),
+    strikethrough: document.getElementById("text-strikethrough")
 };
 
 // Flag to prevent inspector from triggering updates while syncing
@@ -174,6 +188,8 @@ function syncInspectorWithSelection() {
     inspectorFields.text.value = isTextObject(selectedObject) ? (selectedObject.text || "") : "";
     inspectorFields.fontSize.value = isTextObject(selectedObject) && selectedObject.fontSize ? selectedObject.fontSize : "";
     inspectorFields.fontFamily.value = isTextObject(selectedObject) ? (selectedObject.fontFamily || "") : "";
+    inspectorFields.lineHeight.value = isTextObject(selectedObject) && selectedObject.lineHeight ? selectedObject.lineHeight : "";
+    inspectorFields.letterSpacing.value = isTextObject(selectedObject) && selectedObject.charSpacing ? selectedObject.charSpacing : "";
 
     // Show/hide controls based on object type
     const selectedIsText = isTextObject(selectedObject);
@@ -182,6 +198,19 @@ function syncInspectorWithSelection() {
     inspectorFields.text.disabled = !selectedIsText;
     inspectorFields.fontSize.disabled = !selectedIsText;
     inspectorFields.fontFamily.disabled = !selectedIsText;
+    inspectorFields.lineHeight.disabled = !selectedIsText;
+    inspectorFields.letterSpacing.disabled = !selectedIsText;
+    
+    // Disable text control buttons if not text
+    Object.values(textControlButtons).forEach(btn => {
+        btn.disabled = !selectedIsText;
+    });
+    
+    // Update button states for text styling
+    if (selectedIsText) {
+        updateTextStyleButtons(selectedObject);
+    }
+    
     setTextControlsVisible(selectedIsText);
     deleteSelectedButton.disabled = false;
     isUpdatingInspector = false;
@@ -250,6 +279,18 @@ function applyInspectorEdits() {
         if (inspectorFields.fontFamily.value.trim()) {
             selectedObject.set("fontFamily", inspectorFields.fontFamily.value.trim());
         }
+        
+        // Apply line height
+        const lineHeight = Number(inspectorFields.lineHeight.value);
+        if (!Number.isNaN(lineHeight) && lineHeight > 0) {
+            selectedObject.set("lineHeight", lineHeight);
+        }
+        
+        // Apply letter spacing (charSpacing in Fabric.js)
+        const letterSpacing = Number(inspectorFields.letterSpacing.value);
+        if (!Number.isNaN(letterSpacing)) {
+            selectedObject.set("charSpacing", letterSpacing);
+        }
     }
 
     // Update canvas rendering
@@ -262,6 +303,99 @@ function applyInspectorEdits() {
 Object.values(inspectorFields).forEach((field) => {
     field.addEventListener("input", applyInspectorEdits);
     field.addEventListener("change", applyInspectorEdits);
+});
+
+// Update visual state of text style buttons based on selected object
+function updateTextStyleButtons(textObject) {
+    if (!isTextObject(textObject)) return;
+    
+    // Update alignment button states
+    const align = textObject.textAlign || "left";
+    textControlButtons.alignLeft.classList.toggle("active", align === "left");
+    textControlButtons.alignCenter.classList.toggle("active", align === "center");
+    textControlButtons.alignRight.classList.toggle("active", align === "right");
+    textControlButtons.alignJustify.classList.toggle("active", align === "justify");
+    
+    // Update style button states
+    textControlButtons.bold.classList.toggle("active", textObject.fontWeight === "bold" || textObject.fontWeight === 700);
+    textControlButtons.italic.classList.toggle("active", textObject.fontStyle === "italic");
+    textControlButtons.underline.classList.toggle("active", textObject.underline === true);
+    textControlButtons.strikethrough.classList.toggle("active", textObject.linethrough === true);
+}
+
+// Text alignment buttons
+textControlButtons.alignLeft.addEventListener("click", function() {
+    const selectedObject = canvasObj.getActiveObject();
+    if (isTextObject(selectedObject)) {
+        selectedObject.set("textAlign", "left");
+        canvasObj.requestRenderAll();
+        updateTextStyleButtons(selectedObject);
+    }
+});
+
+textControlButtons.alignCenter.addEventListener("click", function() {
+    const selectedObject = canvasObj.getActiveObject();
+    if (isTextObject(selectedObject)) {
+        selectedObject.set("textAlign", "center");
+        canvasObj.requestRenderAll();
+        updateTextStyleButtons(selectedObject);
+    }
+});
+
+textControlButtons.alignRight.addEventListener("click", function() {
+    const selectedObject = canvasObj.getActiveObject();
+    if (isTextObject(selectedObject)) {
+        selectedObject.set("textAlign", "right");
+        canvasObj.requestRenderAll();
+        updateTextStyleButtons(selectedObject);
+    }
+});
+
+textControlButtons.alignJustify.addEventListener("click", function() {
+    const selectedObject = canvasObj.getActiveObject();
+    if (isTextObject(selectedObject)) {
+        selectedObject.set("textAlign", "justify");
+        canvasObj.requestRenderAll();
+        updateTextStyleButtons(selectedObject);
+    }
+});
+
+// Text style buttons
+textControlButtons.bold.addEventListener("click", function() {
+    const selectedObject = canvasObj.getActiveObject();
+    if (isTextObject(selectedObject)) {
+        const isBold = selectedObject.fontWeight === "bold" || selectedObject.fontWeight === 700;
+        selectedObject.set("fontWeight", isBold ? "normal" : "bold");
+        canvasObj.requestRenderAll();
+        updateTextStyleButtons(selectedObject);
+    }
+});
+
+textControlButtons.italic.addEventListener("click", function() {
+    const selectedObject = canvasObj.getActiveObject();
+    if (isTextObject(selectedObject)) {
+        selectedObject.set("fontStyle", selectedObject.fontStyle === "italic" ? "normal" : "italic");
+        canvasObj.requestRenderAll();
+        updateTextStyleButtons(selectedObject);
+    }
+});
+
+textControlButtons.underline.addEventListener("click", function() {
+    const selectedObject = canvasObj.getActiveObject();
+    if (isTextObject(selectedObject)) {
+        selectedObject.set("underline", !selectedObject.underline);
+        canvasObj.requestRenderAll();
+        updateTextStyleButtons(selectedObject);
+    }
+});
+
+textControlButtons.strikethrough.addEventListener("click", function() {
+    const selectedObject = canvasObj.getActiveObject();
+    if (isTextObject(selectedObject)) {
+        selectedObject.set("linethrough", !selectedObject.linethrough);
+        canvasObj.requestRenderAll();
+        updateTextStyleButtons(selectedObject);
+    }
 });
 
 // Delete button - remove selected object from canvas
