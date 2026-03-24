@@ -308,6 +308,17 @@ textarea#json-import {
     margin-bottom: 0.45rem;
 }
 
+/* Hidden layer styling - dimmed and strikethrough text */
+.layer-hidden {
+    opacity: 0.5;
+    background: #f5f5f5;
+}
+
+.layer-hidden span {
+    text-decoration: line-through;
+    color: #999;
+}
+
 /* ============================================================================
    BUTTONS & INTERACTIVE ELEMENTS
    ============================================================================ */

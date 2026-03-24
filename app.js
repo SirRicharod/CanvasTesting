@@ -7,6 +7,31 @@ const printArea = document.querySelector(".print-area");
 const canvasOverlayToggle = document.getElementById("toggle-canvas-overlay");
 const canvasOverlayToggleIcon = document.getElementById("toggle-canvas-overlay-icon");
 
+// Override canvas rendering to respect visibility property
+const originalRender = canvasObj.renderAll.bind(canvasObj);
+canvasObj.renderAll = function() {
+    // Temporarily hide objects that have visible = false
+    const objects = this.getObjects();
+    const hiddenObjects = [];
+    
+    objects.forEach(obj => {
+        if (obj.visible === false) {
+            hiddenObjects.push(obj);
+            obj.opacity = 0;
+        }
+    });
+    
+    // Render with hidden objects invisible
+    originalRender();
+    
+    // Restore opacity for hidden objects
+    hiddenObjects.forEach(obj => {
+        obj.opacity = 1;
+    });
+    
+    return this;
+};
+
 // Synchronize canvas dimensions with print area on load and window resize
 function syncCanvasToPrintArea() {
     if (!printArea) return;
@@ -287,6 +312,21 @@ function moveObjectLayer(object, direction) {
     DisplayList();
 }
 
+// Toggle visibility of an object
+function toggleObjectVisibility(object) {
+    // Initialize visibility property if it doesn't exist (default to visible)
+    if (object.visible === undefined) {
+        object.visible = true;
+    }
+    
+    // Toggle the visibility state
+    object.visible = !object.visible;
+    
+    // Update canvas rendering
+    canvasObj.requestRenderAll();
+    DisplayList();
+}
+
 // Update layer list UI - shows all objects on canvas with controls
 function DisplayList() {
     displayList.innerHTML = "";
@@ -296,6 +336,11 @@ function DisplayList() {
         const listItem = document.createElement("div");
         listItem.className = "layer-item d-flex align-items-center gap-2 justify-content-between";
 
+        // Dim the layer item if object is hidden
+        if (object.visible === false) {
+            listItem.classList.add("layer-hidden");
+        }
+
         // Layer label with index and type
         const label = document.createElement("span");
         label.textContent = `${index}: ${object.type}`;
@@ -303,6 +348,18 @@ function DisplayList() {
         // Control buttons container
         const controls = document.createElement("div");
         controls.className = "d-flex align-items-center gap-1";
+
+        // Visibility toggle button (eye icon)
+        const visibilityButton = document.createElement("button");
+        visibilityButton.className = "btn btn-sm btn-outline-secondary";
+        const isHidden = object.visible === false;
+        visibilityButton.innerHTML = isHidden 
+            ? '<i class="bi bi-eye-slash"></i>' 
+            : '<i class="bi bi-eye"></i>';
+        visibilityButton.title = isHidden ? "Show layer" : "Hide layer";
+        visibilityButton.addEventListener("click", function () {
+            toggleObjectVisibility(object);
+        });
 
         // Send backward button
         const backButton = document.createElement("button");
@@ -335,6 +392,7 @@ function DisplayList() {
             DisplayList();
         });
 
+        controls.appendChild(visibilityButton);
         controls.appendChild(backButton);
         controls.appendChild(forwardButton);
         controls.appendChild(deleteButton);
@@ -444,17 +502,39 @@ function CreateImage() {
 // SECTION 5: EXPORT & IMPORT
 // ============================================================================
 
-// Export canvas objects as JSON to clipboard
+// Export canvas objects as JSON to clipboard (preserves visibility state)
 function ExportJSON() {
+    // Store visibility state on each object before exporting
+    const objects = canvasObj.getObjects();
+    objects.forEach(obj => {
+        // Ensure the custom 'visible' property is included in serialization
+        obj.toObject = (function(toObject) {
+            return function() {
+                return Object.assign(toObject.call(this), {
+                    visible: this.visible !== false
+                });
+            };
+        })(obj.toObject);
+    });
+    
     let jsonExport = JSON.stringify(canvasObj);
     navigator.clipboard.writeText(jsonExport);
 }
 
-// Import canvas objects from JSON textarea
+// Import canvas objects from JSON textarea (restores visibility state)
 function ImportJSON() {
     const json = document.getElementById("json-import");
     try {
         canvasObj.loadFromJSON(json.value, function () {
+            // Restore visibility state for each object
+            const objects = canvasObj.getObjects();
+            objects.forEach(obj => {
+                // If visible property doesn't exist in JSON, default to true
+                if (obj.visible === undefined) {
+                    obj.visible = true;
+                }
+            });
+            
             canvasObj.requestRenderAll();
             DisplayList();
         });
