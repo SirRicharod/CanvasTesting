@@ -8,21 +8,21 @@
     /* Background colors */
     --bg: #f3efe8;
     --bg-accent: #e5f1f6;
-    
+
     /* Surface & surface elements */
     --surface: #ffffff;
     --surface-muted: #f8f7f4;
-    
+
     /* Text colors */
     --ink: #1f2a33;
     --ink-soft: #4f5f6b;
-    
+
     /* Borders & dividers */
     --line: #d9dee2;
-    
+
     /* Effects */
     --shadow: 0 10px 30px rgba(31, 42, 51, 0.08);
-    
+
     /* Border radius */
     --radius-lg: 18px;
     --radius-md: 12px;
@@ -60,15 +60,6 @@ body {
 .app-header {
     margin-bottom: 1rem;
     animation: fadeUp 400ms ease-out;
-}
-
-.eyebrow {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #476d80;
-    font-size: 0.8rem;
-    font-weight: 700;
 }
 
 .app-header h1 {
@@ -193,24 +184,27 @@ body {
 /* Toggle button for clean preview mode */
 .stage-toggle-btn {
     position: absolute;
-    right: 0.7rem;
-    bottom: 0.7rem;
-    width: 34px;
-    height: 34px;
-    border: 1px solid rgba(31, 66, 86, 0.22);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.84);
+    right: 1rem;
+    bottom: 1rem;
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgba(31, 66, 86, 0.3);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
     color: #214257;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     z-index: 3;
+
+    transition: all 0.2s ease-in-out;
 }
 
-.stage-toggle-btn:hover,
-.stage-toggle-btn:focus {
-    background: rgba(255, 255, 255, 0.96);
-    border-color: rgba(31, 66, 86, 0.42);
+.stage-toggle-btn:hover {
+    background: rgba(230, 230, 230, 0.8);
+    border-color: rgba(31, 66, 86, 0.5);
+    color: #112f41;
+
 }
 
 /* Fabric.js canvas element styles */
@@ -218,7 +212,7 @@ body {
     width: 100%;
     height: 100%;
     border: 1px solid rgba(60, 112, 136, 0.5);
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(250, 250, 250, 0.1);
 }
 
 /* In clean preview mode, hide canvas border/background */
@@ -331,7 +325,7 @@ textarea#json-import {
     padding-right: 0.35rem;
 }
 
-#list > div {
+#list>div {
     background: #fff;
     border: 1px solid #dbe3e8;
     border-radius: 10px;
