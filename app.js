@@ -1,7 +1,17 @@
+
+// ---------------------------------------------------------------------------
+// SECTION 0: MODULE IMPORTS (must be at the very top of the file)
+// ---------------------------------------------------------------------------
+import {
+    exportCanvasAsPNG,
+    exportCanvasAsJPEG,
+    exportCanvasAsSVG,
+    triggerDownload,
+} from "./exportHelpers.js";
+
 // ============================================================================
 // SECTION 1: CANVAS INITIALIZATION & SETUP
 // ============================================================================
-
 let canvasObj = new fabric.Canvas('mainCanvasId');
 const printArea = document.querySelector(".print-area");
 const canvasOverlayToggle = document.getElementById("toggle-canvas-overlay");
@@ -398,6 +408,28 @@ textControlButtons.strikethrough.addEventListener("click", function() {
     }
 });
 
+// ---------------------------------------------------------------------------
+// SECTION 3: EXPORT BUTTON HANDLERS (PNG, JPEG, SVG)
+// ---------------------------------------------------------------------------
+
+// Export PNG – 2× resolution for print quality.
+document.getElementById("export-png")?.addEventListener("click", () => {
+    const dataUrl = exportCanvasAsPNG(canvasObj, 2);
+    triggerDownload(dataUrl, "design.png");
+});
+
+// Export JPEG – 2× resolution, 0.9 quality.
+document.getElementById("export-jpeg")?.addEventListener("click", () => {
+    const dataUrl = exportCanvasAsJPEG(canvasObj, 2, 0.9);
+    triggerDownload(dataUrl, "design.jpg");
+});
+
+// Export SVG – vector markup.
+document.getElementById("export-svg")?.addEventListener("click", () => {
+    const svg = exportCanvasAsSVG(canvasObj);
+    triggerDownload(svg, "design.svg");
+});
+
 // Delete button - remove selected object from canvas
 deleteSelectedButton.addEventListener("click", function () {
     const selectedObject = canvasObj.getActiveObject();
@@ -736,6 +768,21 @@ function DrawingMode() {
         drawButton.classList.remove("btn-danger");
     }
 }
+
+// ---------------------------------------------------------------------------
+// SECTION 6: EXPOSE FUNCTIONS TO GLOBAL SCOPE (required for inline onclick)
+// ---------------------------------------------------------------------------
+// The HTML uses inline `onclick="CreateSquare()"` etc. When this script is
+// loaded as an ES module, its symbols are not placed on `window` by default.
+// We explicitly attach the public API functions so the UI continues to work.
+window.CreateSquare = CreateSquare;
+window.CreateCircle = CreateCircle;
+window.CreateText = CreateText;
+window.CreateImage = CreateImage;
+window.DrawingMode = DrawingMode;
+window.AddIcon = AddIcon;
+window.ExportJSON = ExportJSON;
+window.ImportJSON = ImportJSON;
 
 // Update brush size from slider
 let slider = document.getElementById("width");

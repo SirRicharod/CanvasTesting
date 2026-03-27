@@ -280,13 +280,24 @@
                             </div>
                             <textarea id="json-import" placeholder="Paste JSON here..."></textarea>
                         </div>
+                        <!-- New Export Buttons for raster and vector formats -->
+                        <div class="tool-group mt-4">
+                            <h3>Image Export</h3>
+                            <div class="button-row mb-2">
+                                <button id="export-png" class="btn btn-outline-primary">Export PNG</button>
+                                <button id="export-jpeg" class="btn btn-outline-primary">Export JPEG</button>
+                                <button id="export-svg" class="btn btn-outline-primary">Export SVG</button>
+                            </div>
+                            <small class="text-muted">PNG/JPEG are exported at 2× resolution for print quality.</small>
+                        </div>
                     </div>
                 </div>
             </aside>
         </main>
     </div>
 
-    <script src="app.js"></script>
+    <!-- Main application script – module because it imports exportHelpers -->
+    <script type="module" src="app.js"></script>
 </body>
 
 </html>
